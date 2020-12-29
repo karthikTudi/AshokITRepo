@@ -9,5 +9,5 @@ public class MiniProjectU2UserManagementApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MiniProjectU2UserManagementApplication.class, args);
 	}
-
 }
+

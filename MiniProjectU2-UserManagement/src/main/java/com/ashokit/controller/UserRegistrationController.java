@@ -29,9 +29,6 @@ public class UserRegistrationController {
 	@Autowired
 	private IUserManagement service;
 
-	@Autowired
-	private MailService mailservice;
-
 	@GetMapping("/countries")
 	public Map<Integer, String> getAllCountry() {
 		return service.findContries();
@@ -59,24 +56,8 @@ public class UserRegistrationController {
 	public ResponseEntity<String> userRegistration(@RequestBody UserMaster master) {
 		if (service.isEmailUnique(master.getEmail())) {
 			service.SaveUser(master);
-			String Subject = "Unlock Account";
-			String body = "please Click Here to unlock the Account";
-			String to = master.getEmail();
-			mailservice.sendMail(Subject, body, to);
 			return new ResponseEntity<String>("Registration Success And goto ur mail to Unlock", HttpStatus.CREATED);
 		}
 		return new ResponseEntity<String>("Registartion Failed", HttpStatus.BAD_REQUEST);
-	}
-
-	//@GetMapping("/sendmail")
-	public String sendMail(@RequestParam String toemail) {
-		String Subject = "Unlock Account";
-		String body = "please  Click Here to unlock the Account ";
-		String to = toemail;
-		boolean isSent = mailservice.sendMail(Subject, body, to);
-		if (isSent) {
-			return "Mail Sent SuccesFully";
-		}
-		return "Mail Not Sent";
 	}
 }// class
